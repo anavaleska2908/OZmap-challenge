@@ -4,13 +4,14 @@ import router from './routes/index.js';
 import json from 'koa-json';
 import koaBody from 'koa-body';
 
-const port = process.env.PORT || 3000;
 const app = new Koa();
 
 app.use(koaBody());
 app
-  .use(json())
-  .use(router.routes())
+.use(json())
+.use(router.routes())
+
+const port = process.env.PORT || 3000;
 
 const server = app
   .listen(port, async () => {        
