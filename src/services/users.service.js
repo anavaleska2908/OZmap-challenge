@@ -33,4 +33,13 @@ export default class UserService {
             throw new Error(error);
         }
     }
+    
+    static async delete ({ id }) {
+        try {
+            const user = User.findByIdAndDelete({ _id: id });
+            return user;
+        } catch (error) {
+            throw new Error(error);
+        }
+    }
 }

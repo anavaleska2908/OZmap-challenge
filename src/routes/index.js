@@ -45,6 +45,21 @@ router.patch("/users/:id", async ctx => {
             message: error.message,
         }
     }
+});
+
+router.delete("/users/:id", async ctx => {
+    try {
+        let { id } = ctx.request.params;
+        await UserController.delete(id);
+        ctx.response.status = 204;
+        
+    } catch (error) {
+        ctx.response.status = 404;
+        ctx.body = {
+            name: error.name,
+            message: error.message,
+        }
+    }
 })
 
 export default router;

@@ -24,4 +24,13 @@ export default class UserController {
             throw new Error(error);
         }
     }
+    
+    static async delete(id) {
+        try {
+            const user = await UserService.delete({id});
+            return user;
+        } catch (error) {
+            throw new Error(error);
+        }
+    }
 }
