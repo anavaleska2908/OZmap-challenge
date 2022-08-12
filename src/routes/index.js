@@ -16,4 +16,19 @@ router.get("/users", async ctx => {
     }
 });
 
+router.post("/users", async ctx => {
+    try {
+        let user = ctx.request.body;
+        user = await UserController.store( user );
+        ctx.response.status = 201;
+        ctx.body = user;
+    } catch (error) {
+        ctx.response.status = 400;
+        ctx.body = {
+            name: error.name,
+            message: error.message,
+        }
+    }
+});
+
 export default router;
