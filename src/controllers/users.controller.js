@@ -14,4 +14,14 @@ export default class UserController {
         const users = await UserService.index();
         return users;
     }
+    
+    static async update(data, id) {
+        const { name, email, password, age } = data;
+        try {
+            const user = await UserService.update({name, email, password, age}, {id});
+            return user;
+        } catch (error) {
+            throw new Error(error);
+        }
+    }
 }

@@ -19,7 +19,7 @@ router.get("/users", async ctx => {
 router.post("/users", async ctx => {
     try {
         let user = ctx.request.body;
-        user = await UserController.store( user );
+        user = await UserController.store(user);
         ctx.response.status = 201;
         ctx.body = user;
     } catch (error) {
@@ -30,5 +30,21 @@ router.post("/users", async ctx => {
         }
     }
 });
+
+router.patch("/users/:id", async ctx => {
+    try {
+        let user = ctx.request.body;
+        let { id } = ctx.request.params;
+        user = await UserController.update(user, id);
+        ctx.response.status = 200;
+        ctx.body = user;
+    } catch (error) {
+        ctx.response.status = 400;
+        ctx.body = {
+            name: error.name,
+            message: error.message,
+        }
+    }
+})
 
 export default router;
