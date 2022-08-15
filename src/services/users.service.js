@@ -1,19 +1,35 @@
 import User from "../models/user.model.js";
 import bcryptjs from "bcryptjs";
+import { AppError } from "../errors/appError.js";
 export default class UserService {
     static async store ({name, email, password, age}) {
-        try {
-            //usuario menor de idade
-            const user = await User.create( {
-                name,
-                email,
-                password: bcryptjs.hashSync( password, 8 ), 
-                age
-            } );
-            return user;
-        } catch (error) {
-            throw new Error(error);
+        if(age < 18) {
+            throw new AppError( 400, "Underage user" );
         }
+        
+        const checkUserExists = await User.findOne({email: email});
+        
+        if(!!checkUserExists) {
+            throw new AppError(401, "Email already exists.");
+        }
+        //try {
+            //usuario menor de idade
+            //if(age >= 18) {
+                const user = await User.create( {
+                    name,
+                    email,
+                    password: bcryptjs.hashSync( password, 8 ), 
+                    age
+                } );
+                return user;
+            //} else {
+            //    throw new AppError( 400, "Underage user" );
+                
+            //}
+            
+        //} catch (error) {
+        //    throw new AppError(error);
+        //}
     }
     
     static async index () {

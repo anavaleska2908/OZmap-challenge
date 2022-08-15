@@ -3,12 +3,12 @@ import UserService from "../services/users.service.js";
 export default class UserController {
     static async store(data) {
         const { name, email, password, age } = data;
-        try {
+        //try {
             const user = await UserService.store({name, email, password, age});
             return user;
-        } catch (error) {
-            throw new Error(error);
-        }
+        //} catch (error) {
+        //    throw new Error(error);
+        //}
     }
     static async index() {
         const users = await UserService.index();

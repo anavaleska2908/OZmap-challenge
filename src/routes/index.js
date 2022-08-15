@@ -27,11 +27,9 @@ router.post("/users", async ctx => {
         ctx.response.status = 201;
         ctx.body = user;
     } catch (error) {
-        ctx.response.status = 400;
-        ctx.body = {
-            name: error.name,
-            message: error.message,
-        }
+        //ctx.response.status = 400;
+        //ctx.body = error;
+        ctx.app.emit("error", error, ctx)
     }
 });
 
@@ -46,7 +44,7 @@ router.patch("/users/:id", async ctx => {
         ctx.response.status = 400;
         ctx.body = {
             name: error.name,
-            message: error.message,
+            message: error.message.error,
         }
     }
 });
