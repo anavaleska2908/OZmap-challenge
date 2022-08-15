@@ -1,13 +1,3 @@
-//sample test
-//Para rodar os testes, use: npm test
-//PS: Os testes não estão completos e alguns podem comnter erros.
-
-// veja mais infos em:
-//https://mochajs.org/
-//https://www.chaijs.com/
-//https://www.chaijs.com/plugins/chai-json-schema/
-//https://developer.mozilla.org/pt-PT/docs/Web/HTTP/Status (http codes)
-
 import app from '../src/server.js';
 import assert from 'assert';
 import chai from 'chai';
@@ -19,43 +9,14 @@ chai.use(chaiJson);
 
 const expect = chai.expect;
 
-//Define o minimo de campos que o usuário deve ter. Geralmente deve ser colocado em um arquivo separado
-const userSchema = {
-    title: "Schema do Usuario, define como é o usuario, linha 24 do teste",
-    type: "object",
-    required: ['name', 'email', 'password', 'age'],
-    properties: {
-        name: {
-            type: String,
-            required: true,
-        },
-        email: {
-            type: String,
-            required: true,
-            unique: true,
-        },
-        password: {
-            type: String,
-            required: true,
-        },
-        age: {
-            type: Number,
-            required: true,
-        },
-    }
-}
-
-//Inicio dos testes
-
-//este teste é simplesmente pra enteder a usar o mocha/chai
-describe('Um simples conjunto de testes', () => {
-    it('deveria retornar -1 quando o valor não esta presente', () => {
+describe('A simple test suite', () => {
+    it('Should return -1 when the value is not present', () => {
         assert.equal([1, 2, 3].indexOf(4), -1);
     });
 });
 
-//testes da aplicação
-describe('Testes da aplicaçao',  (done) => {
+
+describe('Application tests',  () => {
     it('The server is online', (done) => {
         chai.request(app)
         .get('/')
@@ -87,7 +48,7 @@ describe('Testes da aplicaçao',  (done) => {
             done();
         });
     });
-    //...adicionar pelo menos mais 5 usuarios. se adicionar usuario menor de idade, deve dar erro. Ps: não criar o usuario naoExiste
+    
     it('Should create a ana user', (done) => {
         chai.request(app)
         .post('/users')

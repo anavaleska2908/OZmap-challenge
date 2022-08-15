@@ -1,6 +1,7 @@
 import mongoose from "../database.js";
 
-const UserSchema = mongoose.Schema({
+const UserSchema = mongoose.Schema( {
+    type: "object",
     name: {
         type: String,
         required: true,

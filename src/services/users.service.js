@@ -3,8 +3,13 @@ import bcryptjs from "bcryptjs";
 export default class UserService {
     static async store ({name, email, password, age}) {
         try {
-            password = bcryptjs.hashSync( password, 8 );
-            const user = await User.create({name, email, password, age});
+            //usuario menor de idade
+            const user = await User.create( {
+                name,
+                email,
+                password: bcryptjs.hashSync( password, 8 ), 
+                age
+            } );
             return user;
         } catch (error) {
             throw new Error(error);
