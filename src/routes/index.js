@@ -1,7 +1,11 @@
 import Router from "koa-router";
-import UserController from "../controllers/users.controller";
+import UserController from "../controllers/users.controller.js";
 
 const router = new Router();
+
+router.get('/', async (ctx) => {
+  ctx.body = "Seu servidor está rodando"
+});
 
 router.get("/users", async ctx => {
     try {

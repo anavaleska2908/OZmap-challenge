@@ -1,14 +1,12 @@
-import mongoose from "mongoose";
-mongoose.Promise = global.Promise;
+import app from "./index.js";
+const port = process.env.PORT || 3000;
 
-const mongodb = process.env.MONGODB;
-
-mongoose
-    .connect(mongodb)
-    .then(() => {
-        console.log("MongoDB has been initialized!");
-    }).catch((error) => {
-        console.error("Error during MongoDB initialization!", error);
-    });
-    
-export default mongoose;
+const server = app
+  .listen(port, async () => {        
+    console.log(`Server is running on port: ${port}`);
+  })
+  .on('error', error => {
+    console.error(error)
+  });
+  
+export default server;

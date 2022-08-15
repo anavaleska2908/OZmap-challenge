@@ -1,4 +1,4 @@
-import UserService from "../services/users.service";
+import UserService from "../services/users.service.js";
 
 export default class UserController {
     static async store(data) {

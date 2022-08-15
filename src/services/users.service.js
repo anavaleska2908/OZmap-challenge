@@ -1,4 +1,4 @@
-import User from "../models/user.model";
+import User from "../models/user.model.js";
 import bcryptjs from "bcryptjs";
 export default class UserService {
     static async store ({name, email, password, age}) {

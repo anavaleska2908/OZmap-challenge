@@ -2,10 +2,11 @@
   "name": "projecttest",
   "version": "1.0.0",
   "description": "Project to test the hability of the coop to solve basic problems",
-  "main": "index.js",
+  "main": "src/server.js",
+  "type": "module",
   "scripts": {
-    "dev": "nodemon src/index.js",
-    "test": "mocha"
+    "dev": "node src/server.js",
+    "test": "NODE_ENV=test mocha"
   },
   "repository": {
     "type": "git",

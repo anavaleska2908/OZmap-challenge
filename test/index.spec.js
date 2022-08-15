@@ -8,7 +8,7 @@
 //https://www.chaijs.com/plugins/chai-json-schema/
 //https://developer.mozilla.org/pt-PT/docs/Web/HTTP/Status (http codes)
 
-import app from '../src/index.js';
+import app from '../src/server.js';
 import assert from 'assert';
 import chai from 'chai';
 import chaiHttp from 'chai-http';
@@ -23,18 +23,25 @@ const expect = chai.expect;
 const userSchema = {
     title: "Schema do Usuario, define como é o usuario, linha 24 do teste",
     type: "object",
-    required: ['nome', 'email', 'idade'],
+    required: ['name', 'email', 'password', 'age'],
     properties: {
-        nome: {
-            type: 'string'
+        name: {
+            type: String,
+            required: true,
         },
         email: {
-            type: 'string'
+            type: String,
+            required: true,
+            unique: true,
         },
-        idade: {
-            type: 'number',
-            minimum: 18
-        }
+        password: {
+            type: String,
+            required: true,
+        },
+        age: {
+            type: Number,
+            required: true,
+        },
     }
 }
 
@@ -63,17 +70,17 @@ describe('Testes da aplicaçao',  (done) => {
         chai.request(app)
         .get('/users')
         .end((err, res) => {
-        expect(err).to.be.null;
-        expect(res).to.have.status(200);
-        expect(res.body.rows).to.eql([]);
-        done();
+            expect(err).to.be.null;
+            expect(res).to.have.status(200);
+            expect(res.body).to.eql([]);
+            done();
         });
     });
 
     it('Should create a raupp user', (done) => {
         chai.request(app)
         .post('/users')
-        .send({nome: "raupp", email: "jose.raupp@devoz.com.br", idade: 35})
+        .send({name: "raupp", email: "jose.raupp@devoz.com.br", password: "123456", password: "123456", age: 35})
         .end((err, res) => {
             expect(err).to.be.null;
             expect(res).to.have.status(201);
@@ -84,7 +91,7 @@ describe('Testes da aplicaçao',  (done) => {
     it('Should create a ana user', (done) => {
         chai.request(app)
         .post('/users')
-        .send({nome: "ana", email: "ana@email.com.br", idade: 29})
+        .send({name: "ana", email: "ana@email.com.br", password: "123456", age: 29})
         .end((err, res) => {
             expect(err).to.be.null;
             expect(res).to.have.status(201);
@@ -95,7 +102,7 @@ describe('Testes da aplicaçao',  (done) => {
     it('Should create a angela user', (done) => {
         chai.request(app)
         .post('/users')
-        .send({nome: "angela", email: "angela@email.com.br", idade: 27})
+        .send({name: "angela", email: "angela@email.com.br", password: "123456", age: 27})
         .end((err, res) => {
             expect(err).to.be.null;
             expect(res).to.have.status(201);
@@ -105,7 +112,7 @@ describe('Testes da aplicaçao',  (done) => {
     it('Should create a vitoria user', (done) => {
         chai.request(app)
         .post('/users')
-        .send({nome: "vitoria", email: "vitoria@email.com.br", idade: 36})
+        .send({name: "vitoria", email: "vitoria@email.com.br", password: "123456", age: 36})
         .end((err, res) => {
             expect(err).to.be.null;
             expect(res).to.have.status(201);
@@ -115,7 +122,7 @@ describe('Testes da aplicaçao',  (done) => {
     it('Should create a diana user', (done) => {
         chai.request(app)
         .post('/users')
-        .send({nome: "diana", email: "diana@email.com.br", idade: 20})
+        .send({name: "diana", email: "diana@email.com.br", password: "123456", age: 20})
         .end((err, res) => {
             expect(err).to.be.null;
             expect(res).to.have.status(201);
@@ -125,7 +132,7 @@ describe('Testes da aplicaçao',  (done) => {
     it('Should create a leila user', (done) => {
         chai.request(app)
         .post('/users')
-        .send({nome: "leila", email: "leila@email.com.br", idade: 62})
+        .send({name: "leila", email: "leila@email.com.br", password: "123456", age: 62})
         .end((err, res) => {
             expect(err).to.be.null;
             expect(res).to.have.status(201);
@@ -135,7 +142,7 @@ describe('Testes da aplicaçao',  (done) => {
     it('Should not create underage user', (done) => {
         chai.request(app)
         .post('/users')
-        .send({nome: "sonia", email: "sonia@email.com.br", idade: 16})
+        .send({name: "sonia", email: "sonia@email.com.br", password: "123456", age: 16})
         .end((err, res) => {
             expect(err).to.be.null;
             expect(res).to.have.status(201);

@@ -1,4 +1,4 @@
-import mongoose from "../server.js";
+import mongoose from "../database.js";
 
 const UserSchema = mongoose.Schema({
     name: {
