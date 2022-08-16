@@ -12,24 +12,15 @@ export default class UserService {
         if(!!checkUserExists) {
             throw new AppError(401, "Email already exists.");
         }
-        //try {
-            //usuario menor de idade
-            //if(age >= 18) {
-                const user = await User.create( {
-                    name,
-                    email,
-                    password: bcryptjs.hashSync( password, 8 ), 
-                    age
-                } );
-                return user;
-            //} else {
-            //    throw new AppError( 400, "Underage user" );
-                
-            //}
-            
-        //} catch (error) {
-        //    throw new AppError(error);
-        //}
+        
+        const user = await User.create({
+            name,
+            email,
+            password: bcryptjs.hashSync(password, 8), 
+            age,
+        });
+        
+        return user;
     }
     
     static async index () {
@@ -37,30 +28,41 @@ export default class UserService {
         return users;
     }
     
-    static async update ({name, email, password, age}, {id}) {
-        try {
-            const user = await User.findById({ _id: id });
-            
-            name ? (user.name = name) : user.name
-            email ? (user.email = email) : user.email
-            password ? (user.password = password) : user.password
-            age ? (user.age = age) : user.age
-            
-            user.password = bcryptjs.hashSync(password, 8);
-            
-            await user.save();
-            return user;
-        } catch (error) {
-            throw new Error(error);
+    static async show ({id}) {
+        const user = await User.findById({ _id: id });
+        
+        if (!user) {
+            throw new AppError(404, "User not found");
         }
+        
+        return user;
+    }
+    
+    static async update ({name, email, password, age}, {id}) {  
+        const user = await User.findById({ _id: id });
+        
+        if (!user) {
+            throw new AppError(404, "User not found");
+        }
+        
+        name ? (user.name = name) : user.name
+        email ? (user.email = email) : user.email
+        password ? (user.password = password) : user.password
+        age ? (user.age = age) : user.age
+        
+        user.password = bcryptjs.hashSync(password, 8);
+        
+        await user.save();
+        return user;
     }
     
     static async delete ({ id }) {
-        try {
-            const user = User.findByIdAndDelete({ _id: id });
-            return user;
-        } catch (error) {
-            throw new Error(error);
+        const user = User.findByIdAndDelete({ _id: id });
+        
+        if (!user) {
+            throw new AppError(404, "User not found");
         }
+        
+        return user;
     }
 }

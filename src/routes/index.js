@@ -7,19 +7,6 @@ router.get('/', async (ctx) => {
   ctx.body = "Seu servidor está rodando"
 });
 
-router.get("/users", async ctx => {
-    try {
-        ctx.response.status = 200;
-        ctx.body = await UserController.index();
-    } catch (error) {
-        ctx.response.status = 500;
-        ctx.body = {
-            name: error.name,
-            message: error.message,
-        }
-    }
-});
-
 router.post("/users", async ctx => {
     try {
         let user = ctx.request.body;
@@ -27,11 +14,28 @@ router.post("/users", async ctx => {
         ctx.response.status = 201;
         ctx.body = user;
     } catch (error) {
-        //ctx.response.status = 400;
-        //ctx.body = error;
-        ctx.app.emit("error", error, ctx)
+        ctx.app.emit("error", error, ctx);
     }
 });
+
+router.get("/users", async ctx => {
+    try {
+        ctx.response.status = 200;
+        ctx.body = await UserController.index();
+    } catch (error) {
+        ctx.app.emit("error", error, ctx);
+    }
+});
+
+router.get("/users/:id", async ctx => {
+    try {
+        let { id } = ctx.request.params;
+        ctx.response.status = 200;
+        ctx.body = await UserController.show(id);
+    } catch (error) {
+        ctx.app.emit("error", error, ctx);
+    }
+})
 
 router.patch("/users/:id", async ctx => {
     try {
@@ -41,11 +45,7 @@ router.patch("/users/:id", async ctx => {
         ctx.response.status = 200;
         ctx.body = user;
     } catch (error) {
-        ctx.response.status = 400;
-        ctx.body = {
-            name: error.name,
-            message: error.message.error,
-        }
+        ctx.app.emit("error", error, ctx);
     }
 });
 
@@ -56,11 +56,7 @@ router.delete("/users/:id", async ctx => {
         ctx.response.status = 204;
         
     } catch (error) {
-        ctx.response.status = 404;
-        ctx.body = {
-            name: error.name,
-            message: error.message,
-        }
+        ctx.app.emit("error", error, ctx);
     }
 })
 
