@@ -5,21 +5,17 @@ export default class UserService {
     static async store ({name, email, password, age}) {
         if(age < 18) {
             throw new AppError( 400, "Underage user" );
-        }
-        
-        const checkUserExists = await User.findOne({email: email});
-        
+        }        
+        const checkUserExists = await User.findOne({email: email});        
         if(!!checkUserExists) {
             throw new AppError(401, "Email already exists.");
-        }
-        
+        }        
         const user = await User.create({
             name,
             email,
             password: bcryptjs.hashSync(password, 8), 
             age,
-        });
-        
+        });        
         return user;
     }
     
@@ -29,12 +25,10 @@ export default class UserService {
     }
     
     static async show ({id}) {
-        const user = await User.findById({ _id: id });
-        
+        const user = await User.findById({ _id: id });        
         if (!user) {
             throw new AppError(404, "User not found");
-        }
-        
+        }        
         return user;
     }
     
@@ -57,12 +51,10 @@ export default class UserService {
     }
     
     static async delete ({ id }) {
-        const user = User.findByIdAndDelete({ _id: id });
-        
+        const user = await User.findByIdAndDelete({ _id: id });
         if (!user) {
             throw new AppError(404, "User not found");
-        }
-        
+        }        
         return user;
     }
 }

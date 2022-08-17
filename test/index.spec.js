@@ -3,7 +3,6 @@ import assert from 'assert';
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import chaiJson from 'chai-json-schema';
-import { beforeEach } from 'mocha';
 import User from "../src/models/user.model.js";
 
 chai.use(chaiHttp);
@@ -55,8 +54,8 @@ describe('Application tests',  () => {
 
     it('Should create a raupp user', (done) => {
         chai.request(app)
-        .post('/users')
-        .send({name: "raupp", email: "jose.raupp@devoz.com.br",password: "123456", age: 35})
+        .post('/register')
+        .send({name: "raupp", email: "jose.raupp@devoz.com.br", password: "123456", age: 35})
         .end((err, res) => {
             rauppId = res.body._id;
             expect(err).to.be.null;
@@ -68,7 +67,7 @@ describe('Application tests',  () => {
     
     it('Should create a ana user', (done) => {
         chai.request(app)
-        .post('/users')
+        .post('/register')
         .send({name: "ana", email: "ana@email.com.br", password: "123456", age: 29})
         .end((err, res) => {
             anaId = res.body._id;
@@ -81,7 +80,7 @@ describe('Application tests',  () => {
     
     it('Should create a angela user', (done) => {
         chai.request(app)
-        .post('/users')
+        .post('/register')
         .send({name: "angela", email: "angela@email.com.br", password: "123456", age: 27})
         .end((err, res) => {
             angelaId = res.body._id;
@@ -93,7 +92,7 @@ describe('Application tests',  () => {
     });
     it('Should create a vitoria user', (done) => {
         chai.request(app)
-        .post('/users')
+        .post('/register')
         .send({name: "vitoria", email: "vitoria@email.com.br", password: "123456", age: 36})
         .end((err, res) => {
             vitoriaId = res.body._id;
@@ -105,7 +104,7 @@ describe('Application tests',  () => {
     });
     it('Should create a diana user', (done) => {
         chai.request(app)
-        .post('/users')
+        .post('/register')
         .send({name: "diana", email: "diana@email.com.br", password: "123456", age: 20})
         .end((err, res) => {
             dianaId = res.body._id;
@@ -117,7 +116,7 @@ describe('Application tests',  () => {
     });
     it('Should create a leila user', (done) => {
         chai.request(app)
-        .post('/users')
+        .post('/register')
         .send({name: "leila", email: "leila@email.com.br", password: "123456", age: 62})
         .end((err, res) => {
             leilaId = res.body._id;
@@ -129,33 +128,32 @@ describe('Application tests',  () => {
     });
     it('Should not create underage user', (done) => {
         chai.request(app)
-        .post('/users')
+        .post('/register')
         .send({name: "sonia", email: "sonia@email.com.br", password: "123456", age: 16})
         .end((err, res) => {
             expect(err).to.be.null;
             expect(res).to.have.status(400);
-            expect(res.body).to.include({message: "Underage user"});
+            expect(res.body).to.include({error: "Underage user"});
             done();
         });
     });
 
     it('The user naoExiste does not exist in the system', (done) => {
         chai.request(app)
-        .get('/users/naoExiste')
+        .get(`/users/${userDoesNotExist}`)
         .end((err, res) => {
-            console.log("res ", res.body);
             expect(err).to.be.null;
-            expect(res.body).to.be.equal('User not found'); //possivelmente forma errada de verificar a mensagem de erro
+            expect(res.body).to.include({error: 'User not found'}); 
             expect(res).to.have.status(404);
             expect(res.body).to.be.jsonSchema(User);
             done();
         });
     });
 
-    it('the user raupp exists and is valid', async (done) => {
+    it('the user raupp exists and is valid', (done) => {
         chai.request(app)
-        .get('/users/raupp')
-        .end( (err, res) => {
+        .get(`/users/${rauppId}`)
+        .end((err, res) => {
             expect(err).to.be.null;
             expect(res).to.have.status(200);
             expect(res.body).to.be.jsonSchema(User);
@@ -164,7 +162,7 @@ describe('Application tests',  () => {
     });
     it('the user ana exists and is valid', (done) => {
         chai.request(app)
-        .get('/users/ana')
+        .get(`/users/${anaId}`)
         .end((err, res) => {
             expect(err).to.be.null;
             expect(res).to.have.status(200);
@@ -174,7 +172,7 @@ describe('Application tests',  () => {
     });
     it('the user angela exists and is valid', (done) => {
         chai.request(app)
-        .get('/users/angela')
+        .get(`/users/${angelaId}`)
         .end((err, res) => {
             expect(err).to.be.null;
             expect(res).to.have.status(200);
@@ -184,7 +182,7 @@ describe('Application tests',  () => {
     });
     it('the user vitoria exists and is valid', (done) => {
         chai.request(app)
-        .get('/users/vitoria')
+        .get(`/users/${vitoriaId}`)
         .end((err, res) => {
             expect(err).to.be.null;
             expect(res).to.have.status(200);
@@ -194,7 +192,7 @@ describe('Application tests',  () => {
     });
     it('the user diana exists and is valid', (done) => {
         chai.request(app)
-        .get('/users/diana')
+        .get(`/users/${dianaId}`)
         .end((err, res) => {
             expect(err).to.be.null;
             expect(res).to.have.status(200);
@@ -204,7 +202,7 @@ describe('Application tests',  () => {
     });
     it('the user leila exists and is valid', (done) => {
         chai.request(app)
-        .get('/users/leila')
+        .get(`/users/${leilaId}`)
         .end((err, res) => {
             expect(err).to.be.null;
             expect(res).to.have.status(200);
@@ -215,34 +213,32 @@ describe('Application tests',  () => {
     
     it('Should delete user raupp', (done) => {
         chai.request(app)
-        .delete('/users/raupp')
+        .delete(`/users/${rauppId}`)
         .end((err, res) => {
             expect(err).to.be.null;
-            expect(res).to.have.status(200);
-            expect(res.body).to.be.jsonSchema(User);
+            expect(res).to.have.status(204);
             done();
         });
     });
 
     it('The raupp user should no longer exist on the system', (done) => {
         chai.request(app)
-        .get('/users/raupp')
+        .get(`/users/${rauppId}`)
         .end((err, res) => {
             expect(err).to.be.null;
-            expect(res).to.have.status(200);
+            expect(res).to.have.status(404);
             expect(res.body).to.be.jsonSchema(User);
             done();
         });
     });
-    it('Should be a list with at least 5 users', async (done) => {
-        const user = await User.find();
+    it('Should be a list with at least 5 users', (done) => {
         chai.request(app)
         .get('/users')
         .end((err, res) => {
-        expect(err).to.be.null;
-        expect(res).to.have.status(200);
-        expect(res.body.length).to.be.at.least(5);
-        done();
+            expect(err).to.be.null;
+            expect(res).to.have.status(200);
+            expect(res.body).to.have.lengthOf.at.least(5);
+            done();
         });
     });
 })

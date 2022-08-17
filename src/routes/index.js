@@ -1,5 +1,7 @@
 import Router from "koa-router";
 import UserController from "../controllers/users.controller.js";
+import SessionController from "../controllers/session.controller.js";
+import ensureAuth from "../middleware/ensureAuth.middleware.js"
 
 const router = new Router();
 
@@ -7,7 +9,7 @@ router.get('/', async (ctx) => {
   ctx.body = "Seu servidor está rodando"
 });
 
-router.post("/users", async ctx => {
+router.post("/register", async ctx => {
     try {
         let user = ctx.request.body;
         user = await UserController.store(user);
@@ -17,6 +19,19 @@ router.post("/users", async ctx => {
         ctx.app.emit("error", error, ctx);
     }
 });
+
+router.post("/login", async ctx => {
+    try {
+        let login = ctx.request.body;
+        login = await SessionController.store(login);
+        ctx.response.status = 200;
+        ctx.body = login;
+    } catch (error) {
+        ctx.app.emit("error", error, ctx);
+    }
+});
+
+router.use(ensureAuth);
 
 router.get("/users", async ctx => {
     try {
@@ -58,6 +73,9 @@ router.delete("/users/:id", async ctx => {
     } catch (error) {
         ctx.app.emit("error", error, ctx);
     }
-})
+});
+
+
+
 
 export default router;

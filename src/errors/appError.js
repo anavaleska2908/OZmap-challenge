@@ -9,7 +9,7 @@ class AppError extends Error {
 }
 
 const handleError = (error, response) => {
-    //const { status, message } = error;
+ console.log("error ", error);
     return error.response.body = {
         status: error.response.status,
         message: error.response.message,
