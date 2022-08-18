@@ -6,7 +6,7 @@ import Signup from '../pages/Signup';
 const Routes = () => {
     return (
         <Switch>
-            <Route exact path='/login'>
+            <Route exact path='/'>
                 <Login />
             </Route>
             <Route path='/signup'>
