@@ -35,7 +35,7 @@ export const Container = styled.div`
   justify-content: center;
   /*padding: 0 38px;*/
 `;
-export const SectionStyled = styled.section`
+export const UlStyled = styled.ul`
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
@@ -44,9 +44,7 @@ export const SectionStyled = styled.section`
     align-items: center;
     
     @media (min-width: 750px) {
-        display: flex;
         flex-direction: row;
-        flex-wrap: wrap;
         justify-content: space-evenly;
     }
 `;

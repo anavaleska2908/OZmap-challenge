@@ -29,13 +29,34 @@ export const UserProvider = ({ children }) => {
             }).catch((error) => toast.error("Email ou senha inválidos!"));
     }
     
-
+    useEffect(() => {
+        api.get("/users")
+        .then((response) => {            
+            setUsersData(response.data)
+        }).catch((error) => console.log(error));
+    });
+    
+    const handleDeleteUserButton = (id) => {
+        
+        api.delete(`/users/${id}`).then((response) => {
+            toast.warning("Usuário removido com sucesso!")
+        }).catch((error) => console.log(error))
+    }
+    
+    const handleUpdateUserButton = (id) => {
+        const user = usersData.filter((user) => user._id === id)
+        api.patch(`/users/${id}`, user).then((response) => {
+            toast.success("Usuário atualizado com sucesso!")
+        }).catch((error) => console.log(error));
+    }
     
     return (
         <UserContext.Provider value={{
             handleFormRegisterSubmit,
             handleFormLoginSubmit,
             usersData,
+            handleDeleteUserButton,
+            handleUpdateUserButton,
         }}>
             {children}
         </UserContext.Provider>
