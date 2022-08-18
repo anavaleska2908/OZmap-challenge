@@ -19,13 +19,13 @@ const ensureAuth = (request, response, next) => {
             _id: sub,
         };
         //console.log("request.user ", request.user);
+        return next();
         
     } catch (error) {
         console.log("error ", error);
         
         throw new AppError(401, "Invalid Token");
     }
-    return next();
     
 };
 

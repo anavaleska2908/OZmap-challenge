@@ -4,11 +4,13 @@ import router from './routes/index.js';
 import json from 'koa-json';
 import koaBody from 'koa-body';
 import { AppError } from "./errors/appError.js";
+import cors from '@koa/cors';
 
 const app = new Koa();
 
 app.use(koaBody())
    .use(json())
+   .use(cors())
    .use(router.routes());
 
 app.on("error", (error, ctx) => {
@@ -19,13 +21,5 @@ app.on("error", (error, ctx) => {
     ctx.status = error.statusCode;
     ctx.body = {error: error.message};
 });
-
-//render(app, {
-//  root: path.join(__dirname, "views"),
-//  layout: "layout",
-//  viewExt: "html",
-//  cache: false,
-//  debug: false
-//});
   
 export default app;
