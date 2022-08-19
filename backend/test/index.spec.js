@@ -39,8 +39,8 @@ describe('Application tests',  () => {
         expect(res).to.have.status(200);
         done();
         });
-    });
-
+    } );
+    
     it('Should be an empty list of users', (done) => {
         chai.request(app)
         .get('/users')
@@ -138,6 +138,19 @@ describe('Application tests',  () => {
         });
     });
 
+    it('Should be possible to log in', (done) => {
+        chai.request( app )
+        .post('/login')
+        .send({name: "diana", email: "diana@email.com.br", password: "123456", age: 20})
+        .end((err, res) => {
+            userToken = res.body.token
+            expect(err).to.be.null;
+            expect(res).to.have.status(200);
+            expect(res.body).to.be.jsonSchema(User);
+            done();
+        })
+    });
+    
     it('The user naoExiste does not exist in the system', (done) => {
         chai.request(app)
         .get(`/users/${userDoesNotExist}`)

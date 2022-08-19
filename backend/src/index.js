@@ -26,7 +26,7 @@ app.use(koaBody())
 //        }
 //    })
 //})
-//   .use(jwt({secret: process.env.SECRET_KEY}).unless({path: [/\/register/, /\/login/]}))
+//   .use(jwt({secret: process.env.SECRET_KEY}).unless({path: [/\/register/, /\/login/, /\/users/]}))
    .use(router.routes())
    
 
