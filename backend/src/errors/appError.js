@@ -4,18 +4,14 @@ class AppError extends Error {
         super();
         this.statusCode = statusCode;
         this.message = message;
-    }
-    
+    }    
 }
 
 const handleError = (error, response) => {
- console.log("error ", error);
     return error.response.body = {
         status: error.response.status,
         message: error.response.message,
-    }
-    
-    
+    }      
 };
 
 export {handleError, AppError};

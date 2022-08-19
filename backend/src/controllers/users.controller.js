@@ -5,8 +5,8 @@ export default class UserController {
         const { name, email, password, age } = data;
         const user = await UserService.store({name, email, password, age});
         return user;
-
     }
+    
     static async index() {
         const users = await UserService.index();
         return users;

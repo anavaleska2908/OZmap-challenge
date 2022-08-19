@@ -36,8 +36,6 @@
     "koa2-cors": "^2.0.6",
     "mongodb": "^4.8.1",
     "mongoose": "^6.5.2",
-    "nodemon": "^2.0.19",
-    "sucrase": "^3.25.0",
     "swagger2": "^3.0.1",
     "swagger2-koa": "^3.0.1"
   },

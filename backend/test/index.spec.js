@@ -24,7 +24,6 @@ describe('A simple test suite', () => {
         assert.equal([1, 2, 3].indexOf(4), -1);
     });
 });
-
 describe('Application tests',  () => {
     before((done) => {
         User.remove({}, (error) => {
@@ -39,8 +38,7 @@ describe('Application tests',  () => {
         expect(res).to.have.status(200);
         done();
         });
-    } );
-    
+    } );    
     it('Should be an empty list of users', (done) => {
         chai.request(app)
         .get('/users')
@@ -51,7 +49,6 @@ describe('Application tests',  () => {
             done();
         });
     });
-
     it('Should create a raupp user', (done) => {
         chai.request(app)
         .post('/register')
@@ -63,8 +60,7 @@ describe('Application tests',  () => {
             expect(res.body).to.be.jsonSchema(User);
             done();
         });
-    });
-    
+    });    
     it('Should create a ana user', (done) => {
         chai.request(app)
         .post('/register')
@@ -76,8 +72,7 @@ describe('Application tests',  () => {
             expect(res.body).to.be.jsonSchema(User);
             done();
         });
-    });
-    
+    });    
     it('Should create a angela user', (done) => {
         chai.request(app)
         .post('/register')
@@ -137,7 +132,6 @@ describe('Application tests',  () => {
             done();
         });
     });
-
     it('Should be possible to log in', (done) => {
         chai.request( app )
         .post('/login')
@@ -150,7 +144,6 @@ describe('Application tests',  () => {
             done();
         })
     });
-    
     it('The user naoExiste does not exist in the system', (done) => {
         chai.request(app)
         .get(`/users/${userDoesNotExist}`)
@@ -162,7 +155,6 @@ describe('Application tests',  () => {
             done();
         });
     });
-
     it('the user raupp exists and is valid', (done) => {
         chai.request(app)
         .get(`/users/${rauppId}`)
@@ -223,7 +215,6 @@ describe('Application tests',  () => {
             done();
         });
     });
-    
     it('Should delete user raupp', (done) => {
         chai.request(app)
         .delete(`/users/${rauppId}`)
@@ -233,7 +224,6 @@ describe('Application tests',  () => {
             done();
         });
     });
-
     it('The raupp user should no longer exist on the system', (done) => {
         chai.request(app)
         .get(`/users/${rauppId}`)

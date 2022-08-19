@@ -1,8 +1,6 @@
 import Router from "koa-router";
 import UserController from "../controllers/users.controller.js";
 import SessionController from "../controllers/session.controller.js";
-import ensureAuth from "../middleware/ensureAuth.middleware.js"
-import jwt from "koa-jwt";
 
 const router = new Router();
 
@@ -73,10 +71,5 @@ router.delete("/users/:id", async ctx => {
         ctx.app.emit("error", error, ctx);
     }
 });
-
-//router.get("/users", async ctx => {
-//    await ctx.render("index");
-//})
-
 
 export default router;
