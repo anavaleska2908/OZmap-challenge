@@ -14,7 +14,7 @@ export const InputStyled = styled.div`
   border: 1px solid var(--grey-1);
   border-radius: 10px;
   color: var(--grey-0);
-  padding: 1rem;
+  padding: 0.8rem;
   margin-bottom: 0.4em;
   width: 100%;
   display: flex;
@@ -28,7 +28,7 @@ export const InputStyled = styled.div`
         color: var(--red);        
       }
     `}
-  
+    
   input {
     background: transparent;
     align-items: center;

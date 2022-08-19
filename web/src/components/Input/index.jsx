@@ -1,6 +1,6 @@
 import { Container, InputStyled } from "./styles";
 
-export const Input = ( {label, icon: Icon, register, name, error = '', ...rest }) => {
+export const Input = ( {label, icon: Icon, register, name, error, ...rest }) => {
   return (
     <Container>
       <div>{ label } { !!error && <span>{ error }</span> }</div>

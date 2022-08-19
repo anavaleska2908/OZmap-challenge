@@ -12,7 +12,7 @@ export const Login = () => {
     const { handleFormLoginSubmit } = useUser();
     const loginSchema = yup.object().shape({
         email: yup.string().email('Email inválido').required('Campo obrigatório!'),
-        password: yup.string().min(8, 'Mínimo de 8 dígitos ').required('Campo obrigatório!'),
+        password: yup.string().min(6, 'Mínimo de 6 dígitos ').required('Campo obrigatório!'),
     });
     const { register, handleSubmit, formState: { errors } } = useForm( {
         resolver: yupResolver(loginSchema)

@@ -16,7 +16,7 @@ export const Signup = () => {
         name: yup.string().required("Campo obrigatório!"),
         email: yup.string().email("Email inválido").required("Campo obrigatório!"),
         age: yup.number().required("Campo obrigatório!").positive().min(18, "Você deve ser maior de idade").integer(),
-        password: yup.string().min( 8, 'Mínimo de 8 digítos' ).required( "Campo obrigatório!" ),
+        password: yup.string().min( 6, 'Mínimo de 6 digítos' ).required( "Campo obrigatório!" ),
         passwordConfirm: yup.string().oneOf([yup.ref("password")], "Senhas diferentes").required("Campo obrigatório!"),
     });
     

@@ -63,7 +63,7 @@ export const DivButton = styled.div`
         color: var(--grey-0);        
     }
     button {
-        border: 1px solid var(--grey-0);
+        border: 1px solid var(--grey-1);
         padding: 0.5em;
     }
     

@@ -7,6 +7,9 @@ const UserContext = createContext([]);
 
 export const UserProvider = ({ children }) => {
     const [usersData, setUsersData] = useState([]);
+    const [userToEdit, setUserToEdit] = useState([]);
+    //const [userId, setUserId] = useState("");
+    const [switchModal, setSwitchModal] = useState(false);
     const history = useHistory();
     
     const handleFormRegisterSubmit = ({ name, email, password, age }) => {
@@ -19,10 +22,9 @@ export const UserProvider = ({ children }) => {
     }
     
     const handleFormLoginSubmit = (data) => {
-        api.post("/", data)
+        api.post("/login", data)
             .then((response) => {
-                const { token, _id: id, name, email, age } = response.data;
-                const user = { id, name, email, age }
+                const { token, user } = response.data;
                 localStorage.setItem("@OZmap:token", token);
                 localStorage.setItem("@OZmap:user", JSON.stringify(user));
                 return history.push("/home");
@@ -34,21 +36,28 @@ export const UserProvider = ({ children }) => {
         .then((response) => {            
             setUsersData(response.data)
         }).catch((error) => console.log(error));
-    });
+    }, []);
     
-    const handleDeleteUserButton = (id) => {
-        
+    const handleDeleteUserButton = (id) => {        
         api.delete(`/users/${id}`).then((response) => {
             toast.warning("Usuário removido com sucesso!")
         }).catch((error) => console.log(error))
     }
     
-    const handleUpdateUserButton = (id) => {
-        const user = usersData.filter((user) => user._id === id)
-        api.patch(`/users/${id}`, user).then((response) => {
-            toast.success("Usuário atualizado com sucesso!")
+    const getDataToModalUpdate = (userId) => {
+        api.get(`/users/${userId}`).then((response) => {
+            setUserToEdit(response.data)
         }).catch((error) => console.log(error));
     }
+    
+    const handleUpdateUserModal = (data) => {
+        console.log("data ", data);
+        api.patch(`/users/${userToEdit._id}`, data).then((response) => {
+            toast.success("Usuário atualizado com sucesso!")
+            setSwitchModal(false)
+        }).catch((error) => console.log(error));
+    }
+
     
     return (
         <UserContext.Provider value={{
@@ -56,7 +65,11 @@ export const UserProvider = ({ children }) => {
             handleFormLoginSubmit,
             usersData,
             handleDeleteUserButton,
-            handleUpdateUserButton,
+            handleUpdateUserModal,
+            switchModal,
+            setSwitchModal,
+            getDataToModalUpdate,
+            userToEdit
         }}>
             {children}
         </UserContext.Provider>
