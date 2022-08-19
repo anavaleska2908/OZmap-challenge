@@ -1,0 +1,249 @@
+swagger: "2.0"
+info:
+  title: "Swagger Example"
+  description: >
+    This is an example Koa API.
+  version: "1.0.0"
+host: "localhost:3333"
+schemes:
+  - "http"
+paths:
+  /register:
+    post:
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          required: true
+          schema:
+            $ref: "#/definitions/RegisterRequest"
+      responses:
+        201:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/RegisterResponse"
+        500: 
+          $ref: "#/responses/500"      
+  /login:
+    post:
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          required: true
+          schema:
+            $ref: "#/definitions/LoginRequest"
+      responses:
+        201:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/LoginResponse"
+        400: 
+          $ref: "#/responses/400"
+        401:
+          $ref: "#/responses/401"      
+  /users:
+    get:
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      responses:
+        200:
+          description: "successful operation"
+        500: 
+          $ref: "#/responses/500"
+  /users/{id}:
+    get:
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "path"
+          name: "id"
+          required: true
+          schema:
+            type: "string"
+            example: "62ffc78001dfaa76d0a5c2ae"
+      responses:
+        200:
+          description: "successful operation"
+        400: 
+          $ref: "#/responses/400"
+        401:
+          $ref: "#/responses/401"
+    patch:
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "path"
+          name: "id"
+          required: true
+          schema:
+            type: "string"
+            example: "62f559eafb98c2537a6c532c"
+        - in: "body"
+          name: "body"
+          required: true
+          schema:
+            $ref: "#/definitions/PatchRequest"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/PatchResponse"
+        400: 
+          $ref: "#/responses/400"
+        401:
+          $ref: "#/responses/401"
+    delete:
+      parameters:
+        - in: "path"
+          name: "id"
+          required: true
+          schema:
+            type: "string"
+            example: "63000cb4b6346157b5534743"
+      responses:
+        204:
+          description: "successful operation"
+        400: 
+          $ref: "#/responses/400"
+        401:
+          $ref: "#/responses/401"
+definitions:
+  RegisterRequest:
+    type: "object"
+    required:
+      - name
+      - email
+      - password
+      - age
+    properties:
+      name:
+        type: "string"
+        example: "Jane Doe"
+      email:
+        type: "string"
+        example: "janedoe@email.com"
+      password:
+        type: "string"
+        example: "12345678"
+      age:
+        type: "number"
+        example: 20
+  RegisterResponse:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+        example: "Jane Doe"
+      email:
+        type: "string"
+        example: "janedoe@email.com"
+      password:
+        type: "string"
+        example: "$2a$08$8EVUD2WfN5ijKsq0px11Xeb4Dh2npXiapgzOZYxUjlDVKFo9NQeKq"
+      age:
+        type: "number"
+        example: 20
+      _id:
+        type: "string"
+        example: "62ffc78001dfaa76d0a5c2ae"
+      __v:
+        type: "number"
+        example: 0
+  LoginRequest:
+    type: "object"
+    required:
+      - email
+      - password
+    properties:
+      email:
+        type: "string"
+        example: "janedoe@email.com"
+      password:
+        type: "string"
+        example: "12345678"
+  LoginResponse:
+    type: "object"
+    properties:
+      user:
+        _id:
+          type: "string"
+          example: "62ffc78001dfaa76d0a5c2ae"
+        name:
+          type: "string"
+          example: "Jane Doe"
+        email:
+          type: "string"
+          example: "janedoe@email.com"
+        password:
+          type: "string"
+          example: "$2a$08$8EVUD2WfN5ijKsq0px11Xeb4Dh2npXiapgzOZYxUjlDVKFo9NQeKq"
+        age:
+          type: "number"
+          example: 20
+        __v:
+          type: "number"
+          example: 0
+      token:
+        type: "string"
+        example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NjA5MTk3MzMsImV4cCI6MTY2MTAwNjEzMywic3ViIjoiNjJmZDA3NTg2MzgxMWQzOTc3ZjNjODM0In0.BGiMmCy3uD2mCyk3JDqRCUACdmEjdu5cXQF7C11G9kE"
+  PatchRequest:
+    type: "object"
+    required:
+      - name
+      - email
+      - password
+      - age
+    properties:
+      name:
+        type: "string"
+        example: "Jane Doe Doe"
+      email:
+        type: "string"
+        example: "janedoe6@email.com"
+      password:
+        type: "string"
+        example: "12345678"
+      age:
+        type: "number"
+        example: 20
+  PatchResponse:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+        example: "Jane Doe"
+      email:
+        type: "string"
+        example: "janedoe@email.com"
+      password:
+        type: "string"
+        example: "$2a$08$8EVUD2WfN5ijKsq0px11Xeb4Dh2npXiapgzOZYxUjlDVKFo9NQeKq"
+      age:
+        type: "number"
+        example: 20
+      _id:
+        type: "string"
+        example: "62ffc78001dfaa76d0a5c2ae"
+      __v:
+        type: "number"
+        example: 0 
+responses:
+  500:
+    description: Internal Server Error
+  400:
+    description: Bad Request
+  401: 
+    description: JWT is missing!

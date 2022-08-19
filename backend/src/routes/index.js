@@ -2,6 +2,7 @@ import Router from "koa-router";
 import UserController from "../controllers/users.controller.js";
 import SessionController from "../controllers/session.controller.js";
 import ensureAuth from "../middleware/ensureAuth.middleware.js"
+import jwt from "koa-jwt";
 
 const router = new Router();
 
@@ -31,15 +32,6 @@ router.post("/login", async ctx => {
     }
 });
 
-//router.use(ensureAuth, async (ctx, next) => {
-//    try {
-//        return await next();
-//    } catch (error) {
-//        console.log("error ", error);
-        
-//    }
-//});
-
 router.get("/users", async ctx => {
     try {
         ctx.response.status = 200;
@@ -61,8 +53,8 @@ router.get("/users/:id", async ctx => {
 
 router.patch("/users/:id", async ctx => {
     try {
-        let user = ctx.request.body;
         let { id } = ctx.request.params;
+        let user = ctx.request.body;
         user = await UserController.update(user, id);
         ctx.response.status = 200;
         ctx.body = user;
