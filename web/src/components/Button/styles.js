@@ -4,7 +4,7 @@ export const ButtonStyled = styled.button`
   padding: 1em 1em 1em 1em;
   border: none;
   background-color: var(--white-1);
-  color: var(--color-primary);
+  color: var(--grey-1);
   outline: none;
   margin: -0.2em 1em 1em 1em;
   border-radius: 18px;
@@ -12,10 +12,10 @@ export const ButtonStyled = styled.button`
   font-weight: medium;
   cursor: pointer;
   max-width: 170px;
-  border: 1px solid var(--color-primary);
+  border: 1px solid var(--grey-0);
 
   :hover {
-    background-color: var(--color-primary-50);
+    background-color: var(--grey-3);
   }
 `;
 

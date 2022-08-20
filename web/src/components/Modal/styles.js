@@ -51,7 +51,6 @@ export const Content = styled.main`
     
     svg {
         color: var(--grey-1);  
-        /*margin-right: 1.5em;*/
     }
     
     .div_footer {
@@ -61,6 +60,7 @@ export const Content = styled.main`
     
     @media (min-width: 425px) {
         width: 50%;
+        
         div {
             max-width: 95%;
             align-self: center;            
@@ -81,76 +81,3 @@ export const Content = styled.main`
         }
     }
 `;
-
-//export const Shape = styled.div`
-//    display: flex;
-//    flex-direction: column;
-    
-//    div {
-//        display: flex;
-//        flex-direction: column;
-    
-//        img {
-//            max-width: 100%;
-//        }
-        
-//        h3 {
-//            align-self: center;
-//            margin-top: 0.2em;
-//        }
-//    }
-    
-//    ul {
-//        width: 80%;
-//        height: 8em;
-//        margin-top: 0.5em;
-//        padding-left: 0.8em;
-        
-//        li {
-//            list-style: none;
-//        }
-//    }
-    
-    
-    
-//    @media (min-width: 600px) {    
-//        display: flex;
-//        max-width: 20em;
-//        flex-direction: row;     
-        
-//        div {         
-//            margin-top: 0;
-//            width: 20em;
-//            img {
-//                max-width: 80%;
-//                border-radius: 8px;
-//                border: 1px solid var(--color-primary);        
-//            }
-            
-//            h3 {
-//                align-self: flex-start;
-//                margin-top: 0.2em;
-//                /*font-size: 2em;*/
-//                color: var(--grey-0)
-//            }
-//        }
-        
-//        ul {
-//            /*width: 80%;*/
-//            height: 8em;
-//            padding-left: 0;
-//            margin-top: -1.8em;
-            
-//            align-self: center;
-//            li {
-//                list-style: none;
-//                margin-bottom: 0.5em;
-//                color: var(--details)
-//            }
-//        }
-//    }
-//`;
-
-//export const modal = styled.div`
-    
-//`;

@@ -29,12 +29,26 @@ export const Content = styled.div`
     }
 `
 
+export const HeaderStyled = styled.header`
+    display: flex;
+    justify-content: space-around;
+    margin-top: 1em;
+    border-bottom: 1px solid var(--color-primary-50);
+    margin-bottom: 1em;
+    
+    button {
+        border: 1px solid var(--grey-0);
+        color: var(--grey-0);
+        border-radius: 8px;
+    }
+`
+
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  /*padding: 0 38px;*/
 `;
+
 export const UlStyled = styled.ul`
     display: flex;
     flex-direction: column;

@@ -15,8 +15,9 @@ export const Login = () => {
         password: yup.string().min(6, 'Mínimo de 6 dígitos ').required('Campo obrigatório!'),
     });
     const { register, handleSubmit, formState: { errors } } = useForm( {
-        resolver: yupResolver(loginSchema)
+        resolver: yupResolver(loginSchema),
     });
+    
     return (
         <Container>
             <Content>
@@ -46,5 +47,5 @@ export const Login = () => {
                 </form>
             </Content>
         </Container>
-    )
+    );
 };

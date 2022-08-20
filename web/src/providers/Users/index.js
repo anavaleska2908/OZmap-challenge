@@ -7,8 +7,8 @@ const UserContext = createContext([]);
 
 export const UserProvider = ({ children }) => {
     const [usersData, setUsersData] = useState([]);
+    const [usersDataObservation, setUsersDataObservation] = useState([...usersData])
     const [userToEdit, setUserToEdit] = useState([]);
-    //const [userId, setUserId] = useState("");
     const [switchModal, setSwitchModal] = useState(false);
     const history = useHistory();
     
@@ -31,46 +31,58 @@ export const UserProvider = ({ children }) => {
             }).catch((error) => toast.error("Email ou senha inválidos!"));
     }
     
+    const handleClickLogout = () => {
+        localStorage.clear();
+        return history.push("/");
+    }
+    
+    const atualizationPage = (data) => {
+        setUsersDataObservation(data);
+    }
+    
     useEffect(() => {
         api.get("/users")
         .then((response) => {            
-            setUsersData(response.data)
+            setUsersData(response.data);
+            atualizationPage(response.data);
         }).catch((error) => console.log(error));
-    }, []);
+    }, [usersDataObservation]);
     
     const handleDeleteUserButton = (id) => {        
         api.delete(`/users/${id}`).then((response) => {
-            toast.warning("Usuário removido com sucesso!")
+            toast.warning("Usuário removido com sucesso!");
         }).catch((error) => console.log(error))
     }
     
     const getDataToModalUpdate = (userId) => {
         api.get(`/users/${userId}`).then((response) => {
-            setUserToEdit(response.data)
+            setUserToEdit(response.data);
         }).catch((error) => console.log(error));
     }
     
     const handleUpdateUserModal = (data) => {
         console.log("data ", data);
         api.patch(`/users/${userToEdit._id}`, data).then((response) => {
-            toast.success("Usuário atualizado com sucesso!")
-            setSwitchModal(false)
+            toast.success("Usuário atualizado com sucesso!");
+            setSwitchModal(false);
         }).catch((error) => console.log(error));
     }
-
     
     return (
-        <UserContext.Provider value={{
-            handleFormRegisterSubmit,
-            handleFormLoginSubmit,
-            usersData,
-            handleDeleteUserButton,
-            handleUpdateUserModal,
-            switchModal,
-            setSwitchModal,
-            getDataToModalUpdate,
-            userToEdit
-        }}>
+        <UserContext.Provider
+            value={{
+                handleFormRegisterSubmit,
+                handleFormLoginSubmit,
+                usersData,
+                handleDeleteUserButton,
+                handleUpdateUserModal,
+                switchModal,
+                setSwitchModal,
+                getDataToModalUpdate,
+                userToEdit,
+                handleClickLogout
+            }}
+        >
             {children}
         </UserContext.Provider>
     );

@@ -1,4 +1,4 @@
-import { Container, Content, Shape } from "./styles";
+import { Container, Content } from "./styles";
 import { Button } from "../Button";
 import { useUser } from "../../providers/Users";
 import { Input } from "../Input";
@@ -13,21 +13,19 @@ import { useState } from "react";
 
 export const Modal = () => {
     const { setSwitchModal, handleUpdateUserModal, userToEdit } = useUser();
-// console.log("handleUpdateUserModal ", handleUpdateUserModal);
-    const [nameValue, setNameValue] = useState(userToEdit.name)
-    const [emailValue, setEmailValue] = useState(userToEdit.email)
-    const [passwordValue, setPasswordValue] = useState(userToEdit.password)
-    const [ageValue, setAgeValue] = useState(userToEdit.age)
+    const [nameValue, setNameValue] = useState(userToEdit.name);
+    const [emailValue, setEmailValue] = useState(userToEdit.email);
+    const [passwordValue, setPasswordValue] = useState(userToEdit.password);
+    const [ageValue, setAgeValue] = useState(userToEdit.age);
+    
     const updateSchema = yup.object().shape({
         name: yup.string().required("Campo obrigatório!"),
         email: yup.string().email('Email inválido').required('Campo obrigatório!'),
         age: yup.number().required("Campo obrigatório!").positive().min(18, "Você deve ser maior de idade").integer(),
         password: yup.string().min( 6, 'Mínimo de 6 digítos' ).required( "Campo obrigatório!" ),
-        passwordConfirm: yup.string().oneOf([yup.ref("password")], "Senhas diferentes").required("Campo obrigatório!"),
     });
     const { register, handleSubmit, formState: { errors } } = useForm( {
-        //mode: 'onChange',
-        resolver: yupResolver(updateSchema)
+        resolver: yupResolver(updateSchema),
     });
     return (
         <Container>
@@ -42,7 +40,6 @@ export const Modal = () => {
                             register={register}
                             icon={FiUser}
                             label='Nome'
-                            //placeholder='Nome completo'
                             name='name'
                             defaultValue={nameValue}
                             onChange={(event) => setNameValue(event.target.value)}
@@ -52,7 +49,6 @@ export const Modal = () => {
                             register={register}
                             icon={FiMail}
                             label='Email'
-                            //placeholder='Email'
                             name='email'
                             defaultValue={emailValue}                                
                             onChange={(event) => setEmailValue(event.target.value)}
@@ -62,7 +58,6 @@ export const Modal = () => {
                             register={register}
                             icon={RiUserHeartLine}
                             label='Idade'
-                            //placeholder='Idade'
                             name='age'
                             defaultValue={ageValue}
                             onChange={(event) => setAgeValue(event.target.value)}                            
@@ -72,7 +67,6 @@ export const Modal = () => {
                             register={ register }
                             icon={FiLock}
                             label='Senha'
-                            //placeholder='Senha'
                             type='password'                        
                             name='password'
                             defaultValue={passwordValue}
@@ -80,10 +74,13 @@ export const Modal = () => {
                             error={errors.password?.message}
                         />
                         <div className="div_footer">
-                            <Button className="button_check"
+                            <Button
+                                className="button_check"
                                 type="submit"
-                            ><BiCheck size={ 20 } /></Button>
-                            {/*<Button className="button_check"  onClick={() => setSwitchModal(false)}><IoCloseOutline size={20}/></Button>*/}
+                            >
+                                <BiCheck size={ 20 }/>
+                            </Button>
+                            <Button className="button_check"  onClick={() => setSwitchModal(false)}><IoCloseOutline size={20}/></Button>
                         </div>
                     </form>
                 </div>

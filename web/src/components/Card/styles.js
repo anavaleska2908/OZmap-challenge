@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const LiStyled = styled.li`
     display: flex;
     flex-direction: column;
-    background-color: var(--grey-3);
+    background-color: var(--white-1);
     border-radius: 8px;
     margin-bottom: 1em;
     padding: 1em;
@@ -62,12 +62,8 @@ export const DivButton = styled.div`
     svg {
         color: var(--grey-0);        
     }
+    
     button {
-        border: 1px solid var(--grey-1);
         padding: 0.5em;
     }
-    
-    button:hover {
-    background-color: var(--grey-2);
-  }
 `;

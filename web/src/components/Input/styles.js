@@ -41,7 +41,5 @@ export const InputStyled = styled.div`
   }
   svg {
     margin-right: 0.2em;
-  }
-  
-    
+  }    
 `;

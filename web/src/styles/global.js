@@ -27,10 +27,7 @@ img {
 :root {
   --color-primary: 	#9966cc;
   --color-primary-50: #e0d1ef;
-  --color-secondary: #0b9c62;
-  --color-secondary-50: #ceebdf;
   --details: #e4721f;
-  --details-50: #f6d4bb;
   --grey-0: #212529;
   --grey-1: #868e96;
   --grey-2: #e9ecef;
